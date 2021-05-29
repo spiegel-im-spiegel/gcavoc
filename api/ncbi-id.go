@@ -12,13 +12,13 @@ import (
 
 const PathAppliedCropToNBCI = "/cvo/api/CVO_TekiyounousakumotuToNCBI.php"
 
-//GroupName is the structure of scientific name and group info.
-type NBCI struct {
+//NCBI is the structure of scientific name and NCBI ID.
+type NCBI struct {
 	ID   string `json:"NCBI_id"`
 	Name string `json:"scientific_name"`
 }
 
-func (n *NBCI) String() string {
+func (n *NCBI) String() string {
 	if n == nil {
 		return ""
 	}
@@ -29,8 +29,8 @@ func (n *NBCI) String() string {
 	return buf.String()
 }
 
-//AppliedCropToNBCI function returns scientific name and NBCI ID info from applied crop name
-func AppliedCropToNBCI(ctx context.Context, cropName string) (*NBCI, error) {
+//AppliedCropToNCBI function returns scientific name and NCBI ID info from applied crop name
+func AppliedCropToNCBI(ctx context.Context, cropName string) (*NCBI, error) {
 	params := url.Values{}
 	params.Set("term", cropName)
 	resp, err := fetch.New().Get(newServer().withPath(PathAppliedCropToNBCI).withQuery(params).URL, fetch.WithContext(ctx))
@@ -39,7 +39,7 @@ func AppliedCropToNBCI(ctx context.Context, cropName string) (*NBCI, error) {
 	}
 	defer resp.Close()
 
-	var sn NBCI
+	var sn NCBI
 	if err := json.NewDecoder(resp.Body()).Decode(&sn); err != nil {
 		return nil, errs.Wrap(err, errs.WithContext("cropName", cropName))
 	}

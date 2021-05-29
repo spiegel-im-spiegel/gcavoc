@@ -39,7 +39,7 @@ func newRootCmd(ui *rwi.RWI, args []string) *cobra.Command {
 		newStdCmd(ui),
 		newSciCmd(ui),
 		newGrpCmd(ui),
-		newNBCICmd(ui),
+		newNCBICmd(ui),
 		newWikipediaCmd(ui),
 		newMultiCmd(ui),
 	)

@@ -10,13 +10,13 @@ import (
 	"github.com/spiegel-im-spiegel/gocli/rwi"
 )
 
-//newNBCICmd returns cobra.Command instance for show sub-command
-func newNBCICmd(ui *rwi.RWI) *cobra.Command {
-	nbciCmd := &cobra.Command{
-		Use:     "nbci [flags] <applied crop name>",
+//newNCBICmd returns cobra.Command instance for show sub-command
+func newNCBICmd(ui *rwi.RWI) *cobra.Command {
+	ncbiCmd := &cobra.Command{
+		Use:     "ncbi [flags] <applied crop name>",
 		Aliases: []string{"n"},
-		Short:   "Output NBCI ID from applied crop name",
-		Long:    "Output scientific name and NBCI ID from applied crop name.",
+		Short:   "Output NCBI ID from applied crop name",
+		Long:    "Output scientific name and NCBI ID from applied crop name.",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			//Options
 			katakanaFlag, err := cmd.Flags().GetBool("katakana")
@@ -45,17 +45,17 @@ func newNBCICmd(ui *rwi.RWI) *cobra.Command {
 					term = st.Term
 				}
 			}
-			nid, err := api.AppliedCropToNBCI(context.Background(), term)
+			nid, err := api.AppliedCropToNCBI(context.Background(), term)
 			if err != nil {
 				return debugPrint(ui, errs.Wrap(err, errs.WithContext("term", term)))
 			}
 			return debugPrint(ui, ui.Outputln(nid))
 		},
 	}
-	nbciCmd.Flags().BoolP("katakana", "k", false, "convert search term to katakana")
-	nbciCmd.Flags().BoolP("synonym", "s", false, "input parameter as a CVO synonym")
+	ncbiCmd.Flags().BoolP("katakana", "k", false, "convert search term to katakana")
+	ncbiCmd.Flags().BoolP("synonym", "s", false, "input parameter as a CVO synonym")
 
-	return nbciCmd
+	return ncbiCmd
 }
 
 /* Copyright 2021 Spiegel

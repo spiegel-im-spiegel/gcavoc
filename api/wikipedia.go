@@ -54,6 +54,9 @@ func FixWikipediaURL(s string) string {
 		return ""
 	}
 	p := strings.TrimPrefix(s, prefixWikipediaJaURL)
+	if len(p) == 0 {
+		return ""
+	}
 	return prefixWikipediaJaURL + url.PathEscape(p)
 }
 
